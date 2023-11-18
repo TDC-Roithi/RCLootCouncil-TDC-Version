@@ -1,0 +1,13 @@
+## Author: Goines
+## Interface: 100107
+## Notes: Provides RCLootCouncil enabled management for raiders that play in public raids.
+## Title: RCLootCouncilFilter
+## Version: v1.0.8
+## SavedVariables: RCLootCouncilFilterDB
+## OptionalDeps: LibStub, Ace3
+## Dependencies: RCLootCouncil
+## X-Curse-Project-ID: 711055
+
+embeds.xml
+
+RCLootCouncilFilter.lua
