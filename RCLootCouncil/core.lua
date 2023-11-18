@@ -2014,6 +2014,18 @@ end
 -- @return True if ver1 is older than ver2, otherwise false.
 function RCLootCouncil:VersionCompare(ver1, ver2)
 	if not ver1 or not ver2 then return end
+	if ver1 then
+		if ver1:find("-") then
+			prefix1,ver1 = string.split("-",ver1)
+		end
+	else
+	end
+	if ver2 then
+		if ver2:find("-") then
+			prefix2,ver2 = string.split("-",ver2)
+		end
+	else
+	end
 	local a1, b1, c1 = string.split(".", ver1)
 	local a2, b2, c2 = string.split(".", ver2)
 	if not (c1 and c2) then return end -- Check if it exists

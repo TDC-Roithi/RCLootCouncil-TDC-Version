@@ -904,7 +904,7 @@ function RCVotingFrame:GetFrame()
 	if self.frame then return self.frame end
 
 	-- Container and title
-	local f = addon.UI:NewNamed("RCFrame", UIParent, "DefaultRCLootCouncilFrame", L["RCLootCouncil Voting Frame"], 250, 420)
+	local f = addon.UI:NewNamed("RCFrame", UIParent, "DefaultRCLootCouncilFrame", L["RCLootCouncil Voting Frame (TDC Version)"], 250, 420)
 	-- Scrolling table
 	function f.UpdateSt()
 		if f.st then -- It might already be created, so just update the cols
@@ -1413,31 +1413,35 @@ function RCVotingFrame.SetCellGear(rowFrame, frame, data, cols, row, realrow, co
 end
 
 function RCVotingFrame.SetCellVotes(rowFrame, frame, data, cols, row, realrow, column, fShow, table, ...)
-	local name = data[realrow].name
-	frame:SetScript("OnEnter", function()
-		if not addon.mldb.anonymousVoting or (db.showForML and addon.isMasterLooter) then
-			if not addon.mldb.hideVotes or (addon.mldb.hideVotes and (lootTable[session].haveVoted or (addon.mldb.observe and not addon.isCouncil))) then
-				addon:CreateTooltip(L["Voters"], unpack((function ()
-					local ret = {}
-					for i,name in ipairs(lootTable[session].candidates[name].voters) do
-						ret[i] = addon:GetUnitClassColoredName(name)
-					end
-					return ret
-				end)()
-			))
+	if(addon.isMasterLooter) then
+		local name = data[realrow].name
+		frame:SetScript("OnEnter", function()
+			if not addon.mldb.anonymousVoting or (db.showForML and addon.isMasterLooter) then
+				if not addon.mldb.hideVotes or (addon.mldb.hideVotes and (lootTable[session].haveVoted or (addon.mldb.observe and not addon.isCouncil))) then
+					addon:CreateTooltip(L["Voters"], unpack((function ()
+						local ret = {}
+						for i,name in ipairs(lootTable[session].candidates[name].voters) do
+							ret[i] = addon:GetUnitClassColoredName(name)
+						end
+						return ret
+					end)()
+				))
+				end
+			end
+		end)
+		frame:SetScript("OnLeave", function() addon:HideTooltip() end)
+		local val = lootTable[session].candidates[name].votes
+		data[realrow].cols[column].value = val -- Set the value for sorting reasons
+		frame.text:SetText(val)
+
+		if addon.mldb.hideVotes then
+			if not lootTable[session].haveVoted and addon.isCouncil then
+				frame.text:SetText(0)
+				data[realrow].cols[column].value = 0 -- Don't background sort when we can't see the votes
 			end
 		end
-	end)
-	frame:SetScript("OnLeave", function() addon:HideTooltip() end)
-	local val = lootTable[session].candidates[name].votes
-	data[realrow].cols[column].value = val -- Set the value for sorting reasons
-	frame.text:SetText(val)
-
-	if addon.mldb.hideVotes then
-		if not lootTable[session].haveVoted and addon.isCouncil then
-			frame.text:SetText(0)
-			data[realrow].cols[column].value = 0 -- Don't background sort when we can't see the votes
-		end
+	else
+		frame.text:SetText(0)
 	end
 end
 
@@ -1458,15 +1462,15 @@ function RCVotingFrame.SetCellVote(rowFrame, frame, data, cols, row, realrow, co
 		frame.voteBtn:SetScript("OnClick", function(btn)
 			addon.Log:D("Vote button pressed")
 			if lootTable[session].candidates[name].haveVoted then -- unvote
-				addon:Send("group", "vote", session, name, -1)
-				lootTable[session].candidates[name].haveVoted = false
-
+				-- addon:Send("group", "vote", session, name, -1)
+				-- lootTable[session].candidates[name].haveVoted = false
+				return addon:Print(L["The Master Looter doesn't allow you to change your votes"])
 				-- Check if that was our only vote
-				local haveVoted = false
-				for _, v in pairs(lootTable[session].candidates) do
-					if v.haveVoted then haveVoted = true end
-				end
-				lootTable[session].haveVoted = haveVoted
+				-- local haveVoted = false
+				--for _, v in pairs(lootTable[session].candidates) do
+				--	if v.haveVoted then haveVoted = true end
+				--end
+				--lootTable[session].haveVoted = haveVoted
 
 			else -- vote
 				-- Test if they may vote for themselves
@@ -1487,9 +1491,11 @@ function RCVotingFrame.SetCellVote(rowFrame, frame, data, cols, row, realrow, co
 		end)
 		frame.voteBtn:Show()
 		if lootTable[session].candidates[name].haveVoted then
-			frame.voteBtn:SetText(L["Unvote"])
+			frame.voteBtn:SetText(L["Voted"])
+			frame.voteBtn:SetEnabled(false)
 		else
 			frame.voteBtn:SetText(L["Vote"])
+			frame.voteBtn:SetEnabled(true)
 		end
 	end
 end

@@ -193,6 +193,12 @@ function RCVersionCheck:AddEntry(name, class, guildRank, version, tVersion, modu
     --name = name:lower():gsub("^%l", string.upper)
     name = addon:UnitName(name)
     if not tVersion and addon:VersionCompare(highestVersion, version) then
+		local ver = "0.0.0"
+		if version then
+			if version:find("-") then
+				prefix,ver = string.split("-",version)
+			end
+		end
         highestVersion = version
     end
     local vVal = version
@@ -429,6 +435,16 @@ function RCVersionCheck:GetVersionColor(ver, tVer)
     if tVer then
         return colors.yellow
     end
+	if ver then
+		if ver:find("-") then
+			prefix,ver = string.split("-",ver)
+		end
+	end
+	if highestVersion then
+		if highestVersion:find("-") then
+			prefix,highestVersion = string.split("-",highestVersion)
+		end
+	end
     if ver == highestVersion then
         return colors.green
     end
