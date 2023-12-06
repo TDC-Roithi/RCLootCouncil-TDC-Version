@@ -429,6 +429,7 @@ function RCVersionCheck:GetVersionColor(ver, tVer)
     if tVer then
         return colors.yellow
     end
+	-- Code added by Roithi
 	if ver then
 		if ver:find("-") then
 			prefix,ver = string.split("-",ver)
@@ -439,6 +440,7 @@ function RCVersionCheck:GetVersionColor(ver, tVer)
 			prefix,highestVersion = string.split("-",highestVersion)
 		end
 	end
+	-- End Roithi
     if ver == highestVersion then
         return colors.green
     end
