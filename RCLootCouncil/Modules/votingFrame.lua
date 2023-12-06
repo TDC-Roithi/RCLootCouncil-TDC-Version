@@ -903,8 +903,8 @@ end
 function RCVotingFrame:GetFrame()
 	if self.frame then return self.frame end
 
-	-- Container and title
-	local f = addon.UI:NewNamed("RCFrame", UIParent, "DefaultRCLootCouncilFrame", L["RCLootCouncil Voting Frame (TDC Version)"], 250, 420)
+	-- Container and title (Changed by Roithi)
+		local f = addon.UI:NewNamed("RCFrame", UIParent, "DefaultRCLootCouncilFrame", L["RCLootCouncil Voting Frame (TDC Version)"], 250, 420)
 	-- Scrolling table
 	function f.UpdateSt()
 		if f.st then -- It might already be created, so just update the cols
@@ -1412,6 +1412,7 @@ function RCVotingFrame.SetCellGear(rowFrame, frame, data, cols, row, realrow, co
 	end
 end
 
+-- Function edited by Roithi
 function RCVotingFrame.SetCellVotes(rowFrame, frame, data, cols, row, realrow, column, fShow, table, ...)
 	if(addon.isMasterLooter) then
 		local name = data[realrow].name
@@ -1443,7 +1444,7 @@ function RCVotingFrame.SetCellVotes(rowFrame, frame, data, cols, row, realrow, c
 	else
 		frame.text:SetText(0)
 	end
-end
+	end
 
 function RCVotingFrame.SetCellVote(rowFrame, frame, data, cols, row, realrow, column, fShow, table, ...)
 	local name = data[realrow].name

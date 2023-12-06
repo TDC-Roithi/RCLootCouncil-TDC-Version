@@ -430,7 +430,7 @@ function RCLootCouncil:ChatCommand(msg)
 			self:CallModule("version")
 		end
 
-	elseif input == "history" or input == string.lower(_G.HISTORY) or input == "h" or input == "his" then
+	elseif input == "history" or input == string.lower(_G.HISTORY) or input == "h" or input == "his" or input == "hist" then
 		self:CallModule("history")
 		-- @debug@
 	elseif input == "nnp" then
@@ -482,6 +482,9 @@ function RCLootCouncil:ChatCommand(msg)
 		else
 			self:Print(L["You cannot use this command without being the Master Looter"])
 		end
+
+	elseif input == "hidelootframe" or input == "hidelootframes" then
+		self.Require "Utils.GroupLoot":HideGroupLootFrames()
 
 	elseif input == "reset" or input == string.lower(_G.RESET) then
 		for k, v in pairs(db.UI) do -- We can't easily reset due to the wildcard in defaults
@@ -2014,6 +2017,7 @@ end
 -- @return True if ver1 is older than ver2, otherwise false.
 function RCLootCouncil:VersionCompare(ver1, ver2)
 	if not ver1 or not ver2 then return end
+	-- Added by Roithi
 	if ver1 then
 		if ver1:find("-") then
 			prefix1,ver1 = string.split("-",ver1)
@@ -2026,6 +2030,7 @@ function RCLootCouncil:VersionCompare(ver1, ver2)
 		end
 	else
 	end
+	-- End Roithi
 	local a1, b1, c1 = string.split(".", ver1)
 	local a2, b2, c2 = string.split(".", ver2)
 	if not (c1 and c2) then return end -- Check if it exists

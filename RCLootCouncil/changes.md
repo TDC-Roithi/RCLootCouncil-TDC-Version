@@ -1,6 +1,10 @@
 ## Changes
 
-### Hearthstone of the Flame
+### Group Loot
 
-Hearthstone of the Flame (bonus loot from Larodar) is now ignored by RCLootCouncil as it cannot be traded.
+Hiding default group loot frames will now also hide the group loot container (would leave behind an invisible frame that intercepted clicks).
+
+### TradeUI
+
+Fixed error when TradeUI being opened in combat.
 

@@ -1,3 +1,35 @@
+# 3.10.3
+
+## Changes
+
+### Group Loot
+
+Hiding default group loot frames will now also hide the group loot container (would leave behind an invisible frame that intercepted clicks).
+
+### TradeUI
+
+Fixed error when TradeUI being opened in combat.
+
+# 3.10.2
+
+## Changes
+
+### Group Loot
+
+Default WoW group loot frames is now forced hidden after being rolled on by RCLootCouncil.
+
+### Loot History
+
+Added a column for notes.
+
+### Session frame
+
+Will now be shown automatically after a cinematic if it was hidden because of it.
+
+### TradeUI
+
+Addons can no longer check whether people are in trade range during combat, so now the labels are yellow in combat. Clicking the yellow label will attempt to open trade.
+
 # 3.10.1
 
 ## Changes
