@@ -1,11 +1,10 @@
-## Author: Potdisc
+## Author: Roithi
 ## Interface: 100200
-## Notes: Interface for running a Loot Council v3.10.3
+## Notes: Interface for running the TDC RC Loot Council v3.10.1
 ## Title: RCLootCouncil-TDC_Version
 ## Version: TDC-3.10.3
 ## SavedVariables: RCLootCouncilDB, RCLootCouncilLootDB
 ## OptionalDeps: LibStub, CallbackHandler-1.0, Ace3, lib-st, LibWindow-1.1, LibDialog-1.0
-## X-Curse-Project-ID: 39928
 ## IconTexture: Interface\AddOns\RCLootCouncil\Media\logo
 
 Patches\UiDropDownMenuTaintCommunities.lua
